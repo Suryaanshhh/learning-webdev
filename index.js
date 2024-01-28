@@ -21,7 +21,24 @@ function handleFormSubmit(event) {
     document.getElementById('email').value = '';
     document.getElementById('phone').value = '';
 }
+window.addEventListener("DOMContentLoaded",()=>{
+  axios.get('https://crudcrud.com/api/bec0667537e4421e8239a7197740253d/appointment')
+  .then((response)=>{console.log(response)
+           for(var i=0;i<response.data.length;i++){
+            showUser(response.data[i]);
+           }
+  })
+  .catch((err)=>{console.log(err)});
 
+  //const localStorageObj=localStorage;
+ // const localStorageKeys=Object.keys(localStorageObj)
+  //for(var i=0;i<localStorageKeys.length;i++){
+  //  const key=localStorageKeys[i];
+   // const userDetailsString=localStorageObj[key];
+  //  const userDetailsObj=JSON.parse(userDetailsString);
+   // showUser(userDetailsObj);
+ // }
+})
   function showUser(userDetails){
     const parent=document.getElementById('listofitems')
     const child=document.createElement('li')
