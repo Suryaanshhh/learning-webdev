@@ -12,7 +12,7 @@ function handleFormSubmit(event) {
     };
     axios.post('https://crudcrud.com/api/bec0667537e4421e8239a7197740253d/appointment', userDetails)
         .then(function (response) {
-            console.log( response.data);
+            showUser( response.data);
         })
         .catch(function (error) {
             console.error( error);
