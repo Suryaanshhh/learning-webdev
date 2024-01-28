@@ -10,7 +10,7 @@ function handleFormSubmit(event) {
         email: email,
         phone: phone
     };
-    axios.post('https://crudcrud.com/api/bec0667537e4421e8239a7197740253d/appointment', userDetails)
+    axios.post('https://crudcrud.com/api/2682ca6218454a8fb4e8211b9c4029f7/appointment', userDetails)
         .then(function (response) {
             showUser( response.data);
         })
@@ -22,7 +22,7 @@ function handleFormSubmit(event) {
     document.getElementById('phone').value = '';
 }
 window.addEventListener("DOMContentLoaded",()=>{
-  axios.get('https://crudcrud.com/api/bec0667537e4421e8239a7197740253d/appointment')
+  axios.get('https://crudcrud.com/api/2682ca6218454a8fb4e8211b9c4029f7/appointment')
   .then((response)=>{console.log(response)
            for(var i=0;i<response.data.length;i++){
             showUser(response.data[i]);
@@ -40,9 +40,10 @@ window.addEventListener("DOMContentLoaded",()=>{
  // }
 })
   function showUser(userDetails){
+    
     const parent=document.getElementById('listofitems')
     const child=document.createElement('li')
-    child.textContent=userDetails.username+'-'+userDetails.email+'-'+userDetails.phone
+    child.textContent=userDetails.username+'-'+userDetails._id+'-'+userDetails.phone
     const Button =document.createElement('input')
     Button.type="BUTTON"
     Button.value="Delete"
@@ -52,11 +53,23 @@ window.addEventListener("DOMContentLoaded",()=>{
     Edit.value="Edit"
     child.appendChild(Edit);
     parent.appendChild(child);
-    Button.addEventListener("click",function(event){
-      event.preventDefault();
-      localStorage.removeItem(userDetails.email);
-      parent.removeChild(child);
+
+    Button.addEventListener("click",function removeUser(userId){
+    
+     userId.preventDefault();
+
+      axios.delete(`https://crudcrud.com/api/2682ca6218454a8fb4e8211b9c4029f7/appointment/${userDetails._id}`)
+     .then((response)=>{ console.log(response)
+      removeUser(userId)})
+      .catch((err)=>{console.log(err)});
+    
+      //localStorage.removeItem(userDetails.email);
+      //parent.removeChild(child);
     })
+
+
+
+
     Edit.addEventListener("click",function(event){
       event.preventDefault();
       localStorage.removeItem(userDetails.email);
